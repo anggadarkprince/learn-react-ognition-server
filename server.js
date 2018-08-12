@@ -44,8 +44,12 @@ app.get('/profile/:id', (req, res) => {
     profile.getProfile(req, res, db)
 });
 
-app.put('/image', (req, res) => {
+app.put('/update-entry', (req, res) => {
     image.updateEntries(req, res, db);
+});
+
+app.post('/detect-face', (req, res) => {
+    image.handleApiCall(req, res);
 });
 
 app.listen(3300, () => console.log('App is listening on port 3300'));
