@@ -52,4 +52,5 @@ app.post('/detect-face', (req, res) => {
     image.handleApiCall(req, res);
 });
 
-app.listen(3300, () => console.log('App is listening on port 3300'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`App is listening on port ${PORT}`));
