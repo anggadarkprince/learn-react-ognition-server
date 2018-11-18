@@ -1,0 +1,33 @@
+version: "3"
+services:
+  # API Server
+  face-react-ognition-server:
+    container_name: backend
+    # image: node:10.13.0
+    build: ./ # build from Dockerfile rather than define container from image: above
+    command: npm start
+    working_dir: /usr/src/face-react-ognition-server
+    environment:
+      DATABASE_URL: postgres://postgres:anggaari@postgres:5432/smart-brain
+    # Heads up! Docker has updated this feature and now you don't need to define the links property
+    # in order for things to work - https://docs.docker.com/compose/networking/
+    links:
+      - postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/face-react-ognition-server
+
+  # Postgres database
+  postgres:
+    container_name: postgresdb
+    #image: postgres
+    build: ./postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: anggaari
+      POSTGRES_DB: smart-brain
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
