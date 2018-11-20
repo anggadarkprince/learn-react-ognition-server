@@ -41,6 +41,10 @@ app.get('/profile/:id', (req, res) => {
     profile.getProfile(req, res, db)
 });
 
+app.post('/profile/:id', (req, res) => {
+    profile.handleProfileUpdate(req, res, db, bcrypt)
+});
+
 app.put('/update-entry', (req, res) => {
     image.updateEntries(req, res, db);
 });
