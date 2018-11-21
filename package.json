@@ -1,7 +1,8 @@
 {
   "name": "nodeserver",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple node server for Rect-cognition",
+  "repository": "https://github.com/anggadarkprince/learn-react-ognition-server",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
@@ -18,7 +19,9 @@
     "clarifai": "^2.8.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.4.0",
     "knex": "^0.15.2",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "redis": "^2.8.0"
   }
 }

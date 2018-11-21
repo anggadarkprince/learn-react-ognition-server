@@ -8,11 +8,13 @@ services:
     command: npm start
     working_dir: /usr/src/face-react-ognition-server
     environment:
-      DATABASE_URL: postgres://postgres:anggaari@postgres:5432/smart-brain
+      POSTGRES_URI: postgres://postgres:anggaari@postgres:5432/smart-brain
+      REDIS_URI: redis://redis:6379
     # Heads up! Docker has updated this feature and now you don't need to define the links property
     # in order for things to work - https://docs.docker.com/compose/networking/
     links:
       - postgres
+      - redis
     ports:
       - "3000:3000"
     volumes:
@@ -31,3 +33,10 @@ services:
       POSTGRES_PORT: 5432
     ports:
       - "5432:5432"
+
+  # Redis
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"

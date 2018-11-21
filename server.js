@@ -3,14 +3,15 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
-const register = require('./controllers/auth');
+const account = require('./controllers/account');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
+const authorization = require('./controllers/authorization');
 
 const db = knex({
     client: 'pg',
     connection: {
-        connectionString: process.env.DATABASE_URL,
+        connectionString: process.env.POSTGRES_URI,
         //ssl: true
     }
 });
@@ -31,25 +32,25 @@ app.get('/', (req, res) => {
         });
 });
 
-app.post('/register', register.handleRegister(db, bcrypt));
+app.post('/register', account.handleRegister(db, bcrypt));
 
 app.post('/signin', (req, res) => {
-    register.handleLogin(req, res, db, bcrypt)
+    account.signInAuthentication(db, bcrypt)(req, res);
 });
 
-app.get('/profile/:id', (req, res) => {
+app.get('/profile/:id', authorization.requireAuth, (req, res) => {
     profile.getProfile(req, res, db)
 });
 
-app.post('/profile/:id', (req, res) => {
+app.post('/profile/:id', authorization.requireAuth, (req, res) => {
     profile.handleProfileUpdate(req, res, db, bcrypt)
 });
 
-app.put('/update-entry', (req, res) => {
+app.put('/update-entry', authorization.requireAuth, (req, res) => {
     image.updateEntries(req, res, db);
 });
 
-app.post('/detect-face', (req, res) => {
+app.post('/detect-face', authorization.requireAuth, (req, res) => {
     image.handleApiCall(req, res);
 });
 
